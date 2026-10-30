@@ -83,7 +83,7 @@ public class EntityMapper {
         users.setEmpCode(userDTO.getEmpCode());
         users.setUsername(userDTO.getUsername());
         users.setEmail(userDTO.getEmail());
-        users.setJoiningDate(LocalDate.now());
+        users.setJoiningDate(userDTO.getJoiningDate());
         users.setLocationName(userDTO.getLocationName());
         users.setDeptName(userDTO.getDeptName());
         users.setRoleName(userDTO.getRoleName());
@@ -91,9 +91,25 @@ public class EntityMapper {
         users.setGender(userDTO.getGender());
         users.setDob(userDTO.getDob());
         users.setMaritalStatus(userDTO.getMaritalStatus());
-        users.setCreatedDate(LocalDateTime.now());
+        users.setCreatedDate(userDTO.getCreatedDate());
         users.setModifiedDate(userDTO.getModifiedDate());
         return users;
+    }
+
+    public static UserTableDTO toUserDTO(Users users) {
+        UserTableDTO userTableDTO = new UserTableDTO();
+        userTableDTO.setFullName(users.getFirstName()+" "+users.getLastName());
+        userTableDTO.setEmpCode(users.getEmpCode());
+        userTableDTO.setEmail(users.getEmail());
+        userTableDTO.setJoiningDate(users.getJoiningDate());
+        userTableDTO.setLocationName(users.getLocationName());
+        userTableDTO.setDeptName(users.getDeptName());
+        userTableDTO.setRoleName(users.getRoleName());
+        userTableDTO.setShiftTime(users.getShiftTime());
+        userTableDTO.setGender(users.getGender());
+        userTableDTO.setDob(users.getDob());
+        userTableDTO.setMaritalStatus(users.getMaritalStatus());
+        return userTableDTO;
     }
 
     // Location Mapping

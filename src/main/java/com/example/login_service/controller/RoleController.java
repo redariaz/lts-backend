@@ -28,14 +28,14 @@ public class RoleController {
     public Mono<ResponseEntity<APIResponse<List<RoleDTO>>>> getAllRoles() {
         return roleService.getAllRoles()
                 .map(roles -> {
-                    if (roles.isEmpty()) {
-                        return ResponseEntity.status(HttpStatus.NO_CONTENT)
-                                .body(new APIResponse<>(
-                                        "No roles found",
-                                        HttpStatus.NO_CONTENT.value(),
-                                        null
-                                ));
-                    }
+//                    if (roles.isEmpty()) {
+//                        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+//                                .body(new APIResponse<>(
+//                                        "No roles found",
+//                                        HttpStatus.NO_CONTENT.value(),
+//                                        null
+//                                ));
+//                    }
                         return ResponseEntity.ok(
                                 new APIResponse<>(
                                         "Roles fetched successfully",

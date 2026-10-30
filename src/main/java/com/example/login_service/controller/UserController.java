@@ -1,6 +1,7 @@
 package com.example.login_service.controller;
 
 import com.example.login_service.dto.UserDTO;
+import com.example.login_service.dto.UserTableDTO;
 import com.example.login_service.entity.Users;
 import com.example.login_service.repository.UserRepository;
 import com.example.login_service.response.APIResponse;
@@ -45,6 +46,20 @@ public class UserController {
                 );
     }
 
+    @GetMapping("/getAllUsersForTable")
+    public Mono<ResponseEntity<APIResponse<List<UserTableDTO>>>> getAllUsersForTable() {
+        return userService.getAllUsersForTable()
+                .collectList()
+                .map(users ->
+                        ResponseEntity.status(HttpStatus.OK)
+                                .body(new APIResponse<>(
+                                        "Users fetched successfully",
+                                        HttpStatus.OK.value(),
+                                        users
+                                ))
+                );
+    }
+
     @PostMapping("/create-user")
     public Mono<ResponseEntity<APIResponse<Users>>> createUser(@RequestBody UserDTO userDTO) {
         return userService.createUser(userDTO)
@@ -59,7 +74,7 @@ public class UserController {
     }
 
     @GetMapping("/{empCode}")
-    public Mono<ResponseEntity<APIResponse<Users>>> getUserByEmpCode(@PathVariable Long empCode) {
+    public Mono<ResponseEntity<APIResponse<Users>>> getUserByEmpCode(@PathVariable Integer empCode) {
         return userService.getUserByEmpCode(empCode)
                 .map(user ->
                         ResponseEntity.ok(
@@ -69,6 +84,20 @@ public class UserController {
                                         user
                                 )
                         ));
+    }
+
+    @PatchMapping("/update-user/{empCode}")
+    public Mono<ResponseEntity<APIResponse<Users>>> updateUser(@PathVariable Integer empCode, @RequestBody UserDTO userDTO) {
+        return userService.updateUser(empCode, userDTO)
+                .map(updatedUser ->
+                        ResponseEntity.ok(
+                                new APIResponse<>(
+                                        "User updated successfully",
+                                        HttpStatus.OK.value(),
+                                        updatedUser
+                                )
+                        )
+        );
     }
 
 }
